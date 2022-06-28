@@ -12,7 +12,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-var entryCollection *mongo.Collection = openColletion(Client, "calories")
+var entryCollection *mongo.Collection = OpenColletion(Client, "calories")
 
 func AddEntry(c *gin.Context) {}
 func Getentries(c *gin.Context) {
