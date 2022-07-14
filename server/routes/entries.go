@@ -8,12 +8,14 @@ import (
 
 	"github.com/Anirudh-rao/CalorieTracker-Go-React/models"
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-var entryCollection *mongo.Collection = OpenColletion(Client, "calories")
+var validate = validator.New()
+var entryCollection *mongo.Collection = OpenCollection(Client, "calories")
 
 //Add Entry Function
 func AddEntry(c *gin.Context) {
@@ -111,7 +113,7 @@ func GetEntriesByIngredient(c *gin.Context) {
 //Update Entry Function
 func UpdateEntry(c *gin.Context) {
 	entryID := c.Params.ByName("id")
-	docID, _ := primitive.NewObjectID().MarshalText(entryID)
+	docID, _ := primitive.ObjectIDFromHex(entryID)
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	var entry models.Entry
 	if err := c.BindJSON(&entry); err != nil {
@@ -148,10 +150,10 @@ func UpdateEntry(c *gin.Context) {
 //UpdateIngredient Function
 func UpdateIngredient(c *gin.Context) {
 	entryID := c.Params.ByName("id")
-	docID, _ := primitive.NewObjectID().MarshalText(entryID)
+	docID, _ := primitive.ObjectIDFromHex(entryID)
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	type Ingredient struct {
-		Ingredients *string `jsson:"ingredients"`
+		Ingredients *string `json:"ingredients"`
 	}
 	var ingredient Ingredient
 	if err := c.BindJSON(&ingredient); err != nil {
@@ -160,7 +162,7 @@ func UpdateIngredient(c *gin.Context) {
 		return
 	}
 	result, err := entryCollection.UpdateOne(ctx, bson.M{"_id": docID},
-		bson.D{{"$set", bson.D{"ingredients", ingredient.Ingredients}}})
+		bson.D{{"$set", bson.D{{"ingredients", ingredient.Ingredients}}}})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		fmt.Println(err)
