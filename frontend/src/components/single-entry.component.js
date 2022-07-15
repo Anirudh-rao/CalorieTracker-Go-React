@@ -11,9 +11,23 @@ const Entry =({entryData, setChangeIngredient, deleteSingleEntry, setChangeEntry
                 <Col>Calories:{entryData !==undefined&&entryData.calories}</Col>
                 <Col>Fat:{entryData !==undefined&&entryData.fat}</Col>
                 <Col><Button onClick={()=> deleteSingleEntry(entryData._id)}>delete entry</Button></Col>
-                <Col><Button onClick={()=>setChangeIngredient()}>Change  ingredients</Button></Col>
-                <Col><Button onClick={()=>setChangeEntry()}>Change entry</Button></Col>
+                <Col><Button onClick={()=>ChangeIngredient()}>Change  ingredients</Button></Col>
+                <Col><Button onClick={()=>ChangeEntry()}>Change entry</Button></Col>
             </Row>
         </Card>
     );
+    function ChangeIngredient(){
+        setChangeIngredient({
+            "change": true,
+            "id":entryData._id
+    })
+    }
+    function ChangeEntry(){
+        setChangeEntry(
+            {
+                "change":true,
+                "id":entryData._id
+            }
+        )
+    }
 }
