@@ -10,7 +10,9 @@ const Entry =({entryData, setChangeIngredient, deleteSingleEntry, setChangeEntry
                 <Col>Ingredients:{entryData !==undefined&&entryData.ingredients}</Col>
                 <Col>Calories:{entryData !==undefined&&entryData.calories}</Col>
                 <Col>Fat:{entryData !==undefined&&entryData.fat}</Col>
-                <Col><Button onClick={}></Button></Col>
+                <Col><Button onClick={()=> deleteSingleEntry(entryData._id)}>delete entry</Button></Col>
+                <Col><Button onClick={()=>setChangeIngredient()}>Change  ingredients</Button></Col>
+                <Col><Button onClick={()=>setChangeEntry()}>Change entry</Button></Col>
             </Row>
         </Card>
     );
