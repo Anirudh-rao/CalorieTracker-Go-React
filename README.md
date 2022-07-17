@@ -9,3 +9,8 @@ The Simple Tech Stack includes:
 2. `React`: Front-End Programming Language
     1. `BootstrapCSS`: To Provide Some basic Styling.
 3. `MongoDB`: JSON Based NO-SQL databse.
+
+This Application can help you to track calories , Fat for ebery particular Dishes.
+We can `add` , `delete` and `update` our list as we desire.
+
+The Server thats primarly writter in Golang runs on `localhost:8080` .
