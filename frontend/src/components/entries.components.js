@@ -4,6 +4,25 @@ import { Button, Form , Container, Modal } from 'bootstrap';
 import Entry from './single-entry.component';
 
 const Entriess=() =>{
+
+    const [entriers, setEntries]  = useState([])
+    const [refreshData, setRefreshData] =  useState(false)
+    const[ChangeEntry,setChangeEntry] =  useState({"change":false,"id":0})
+    const[ChangeIngredient,setChangeIngredient] = useState({"change":false, "id":0})
+    const[newIngredientName , setnewIngredientName] = useState("")
+    const[addNewEntry, setAddNewEntry] =  useState({
+        "dish":"",
+        "ingredients":"",
+        "calories":0, fat:0 })
+        //InnitialLoadUp
+        useEffect(()=>{
+            getAllEntries();
+        })
+        //Once we Refresh we Get all Entries
+        if(refreshData){
+            setRefreshData(false);
+            getAllEntries();
+        }
     return(
         <div>
             <Container>
@@ -54,4 +73,14 @@ function deleteSingleEntry(id){
                 }
         })
 
+}
+
+function getAllEntries(){
+    //Our Go Server
+    var url = "https://localhost:8080/entry/create"
+    axios.get(url, {responseType:'json'}).then(response =>{
+        if(response.status == 200){
+            setEntries(response.data)
+        }
+    })
 }
